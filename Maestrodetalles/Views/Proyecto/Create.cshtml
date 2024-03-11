@@ -1,12 +1,10 @@
 ﻿@model Maestrodetalles.Models.Proyecto
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Crear Tarea";
 }
 
-<h1>Create</h1>
-
-<h4>Proyecto</h4>
+<h1>@ViewBag.Title</h1>
 <hr />
 <form asp-action="Create">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>

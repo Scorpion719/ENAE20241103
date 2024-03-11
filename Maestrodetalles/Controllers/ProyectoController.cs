@@ -101,7 +101,9 @@ namespace Maestrodetalles.Controllers
                 return NotFound();
             }
 
-            var proyecto = await _context.Proyectos.FindAsync(id);
+            var proyecto = await _context.Proyectos
+                .Include(s => s.Tarea)
+                .FirstAsync(s => s.Id == id);
             if (proyecto == null)
             {
                 return NotFound();
@@ -115,34 +117,71 @@ namespace Maestrodetalles.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Descripcion,FechaInicio,FechaFin")] Proyecto proyecto)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Descripcion,FechaInicio,FechaFin,Tarea")] Proyecto proyecto)
         {
             if (id != proyecto.Id)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            try
             {
-                try
+                // Obtener los datos de la base de datos que van a ser modificados
+                var facturaUpdate = await _context.Proyectos
+                        .Include(s => s.Tarea)
+                        .FirstAsync(s => s.Id == proyecto.Id);
+                facturaUpdate.Nombre = proyecto.Nombre;
+                facturaUpdate.Descripcion = proyecto.Descripcion;
+                facturaUpdate.FechaInicio = proyecto.FechaInicio;
+                facturaUpdate.FechaFin = proyecto.FechaFin;
+                //facturaUpdate.Estado = proyecto.Estado;
+                // Obtener todos los detalles que seran nuevos y agregarlos a la base de datos
+                var detNew = proyecto.Tarea.Where(s => s.Id == 0);
+                foreach (var d in detNew)
                 {
-                    _context.Update(proyecto);
-                    await _context.SaveChangesAsync();
+                    facturaUpdate.Tarea.Add(d);
                 }
-                catch (DbUpdateConcurrencyException)
+                // Obtener todos los detalles que seran modificados y actualizar a la base de datos
+                var detUpdate = proyecto.Tarea.Where(s => s.Id > 0);
+                foreach (var d in detUpdate)
                 {
-                    if (!ProyectoExists(proyecto.Id))
+                    var det = facturaUpdate.Tarea.FirstOrDefault(s => s.Id == d.Id);
+                    det.Nombre = d.Nombre;
+                    det.Descripcion = d.Descripcion;
+                    det.FechaInicio = d.FechaInicio;
+                    det.FechaFin = d.FechaFin;
+                    det.Estado = d.Estado;
+                }
+                // Obtener todos los detalles que seran eliminados y actualizar a la base de datos
+                var delDet = proyecto.Tarea.Where(s => s.Id < 0).ToList();
+                if (delDet != null && delDet.Count > 0)
+                {
+                    foreach (var d in delDet)
                     {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
+                        d.Id = d.Id * -1;
+                        var det = facturaUpdate.Tarea.FirstOrDefault(s => s.Id == d.Id);
+                        _context.Remove(det);
+                        // facturaUpdate.DetFacturaVenta.Remove(det);
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                // Aplicar esos cambios a la base de datos
+
+
+                _context.Update(facturaUpdate);
+                await _context.SaveChangesAsync();
             }
-            return View(proyecto);
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ProyectoExists(proyecto.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Proyecto/Delete/5
