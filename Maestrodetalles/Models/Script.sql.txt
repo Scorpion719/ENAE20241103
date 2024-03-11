@@ -1,0 +1,25 @@
+create database ENAE20241103DB
+
+use ENAE20241103DB
+-- Crear la tabla Proyecto
+CREATE TABLE Proyecto (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Nombre VARCHAR(100) NOT NULL,
+    Descripcion VARCHAR(255),
+    FechaInicio DATE NOT NULL,
+    FechaFin DATE
+);
+GO
+
+-- Crear la tabla Tareas
+CREATE TABLE Tareas (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    IdProyecto INT NOT NULL,
+    Nombre VARCHAR(100) NOT NULL,
+    Descripcion VARCHAR(255),
+    FechaInicio DATE NOT NULL,
+    FechaFin DATE,
+    Estado VARCHAR(20) NOT NULL, -- Por ejemplo: Pendiente, En progreso, Completada, etc.
+    FOREIGN KEY (IdProyecto) REFERENCES Proyecto(Id) ON DELETE CASCADE
+);
+GO
