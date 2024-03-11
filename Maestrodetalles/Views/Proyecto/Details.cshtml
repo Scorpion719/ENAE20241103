@@ -9,7 +9,7 @@
 <div>
     <h4>Proyecto</h4>
     <hr />
-    <dl class="row">
+    <dl class="row ">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Nombre)
         </dt>
@@ -40,6 +40,6 @@
     @await Html.PartialAsync("_Tarea", Model.Tarea)
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Editar</a> |
-    <a asp-action="Index">Cancelar</a>
+    <a class="btn btn-outline-primary" asp-action="Edit" asp-route-id="@Model?.Id">Editar</a> |
+    <a class="btn btn-outline-danger" asp-action="Index">Cancelar</a>
 </div>
