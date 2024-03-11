@@ -40,7 +40,7 @@ namespace Maestrodetalles.Controllers
             {
                 return NotFound();
             }
-
+            ViewBag.Accion = "Details";
             return View(proyecto);
         }
 
@@ -105,6 +105,7 @@ namespace Maestrodetalles.Controllers
             {
                 return NotFound();
             }
+            ViewBag.Accion = "Edit";
             return View(proyecto);
         }
 
@@ -157,6 +158,7 @@ namespace Maestrodetalles.Controllers
             {
                 return NotFound();
             }
+            ViewBag.Accion = "Delete";
 
             return View(proyecto);
         }
