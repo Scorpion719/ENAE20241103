@@ -50,10 +50,10 @@
                         <td>
                             <input type="hidden" value="@item.Id" name="Tarea[@index].Id">
                             <input type="hidden" value="@item.IdProyecto" name="Tarea[@index].IdProyecto">
-                            <input class="form-control" data-readonly type="text" name="Tarea[@index].Nombre" value="@item.Nombre">
+                            <input maxlength="100" class="form-control" data-readonly type="text" name="Tarea[@index].Nombre" value="@item.Nombre">
                         </td>
                         <td>
-                            <input class="form-control" data-readonly type="text" name="Tarea[@index].Descripcion" value="@item.Descripcion">
+                            <input maxlength="255" class="form-control" data-readonly type="text" name="Tarea[@index].Descripcion" value="@item.Descripcion">
                         </td>
                         <td>
                             <input class="form-control" data-readonly type="date" name="Tarea[@index].FechaInicio" value="@item.FechaInicio">
@@ -62,7 +62,7 @@
                             <input class="form-control" data-readonly type="date" name="Tarea[@index].FechaFin" value="@item.FechaFin">
                         </td>
                         <td>
-                            <input class="form-control" data-readonly type="text" name="Tarea[@index].Estado" value="@item.Estado">
+                            <input maxlength="20" class="form-control" data-readonly type="text" name="Tarea[@index].Estado" value="@item.Estado">
                         </td>
                         <td>
                             @if (ViewBag.Accion == "Create" || ViewBag.Accion == "Edit")
