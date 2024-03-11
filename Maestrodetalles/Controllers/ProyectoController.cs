@@ -35,6 +35,7 @@ namespace Maestrodetalles.Controllers
             }
 
             var proyecto = await _context.Proyectos
+                .Include(s=>s.Tarea)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (proyecto == null)
             {
