@@ -54,7 +54,9 @@ namespace Maestrodetalles.Controllers
             proyecto.Tarea = new List<Tarea>();
             proyecto.Tarea.Add(new Tarea
             {
-            });
+                FechaInicio = DateTime.Now,
+                FechaFin = DateTime.Now
+            }) ;
             ViewBag.Accion = "Create";
             return View(proyecto);
         }
@@ -74,7 +76,7 @@ namespace Maestrodetalles.Controllers
         [HttpPost]
         public ActionResult AgregarDetalles([Bind("Id,Nombre,Descripcion,FechaInicio,FechaFin,Tarea")] Proyecto proyecto, string accion)
         {
-            proyecto.Tarea.Add(new Tarea { });
+            proyecto.Tarea.Add(new Tarea { FechaInicio = DateTime.Now, FechaFin = DateTime.Now });
             ViewBag.Accion = accion;
             return View(accion, proyecto);
         }

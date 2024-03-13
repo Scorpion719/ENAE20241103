@@ -56,10 +56,10 @@
                             <input maxlength="255" class="form-control" data-readonly type="text" name="Tarea[@index].Descripcion" value="@item.Descripcion">
                         </td>
                         <td>
-                            <input class="form-control" data-readonly type="date" name="Tarea[@index].FechaInicio" value="@item.FechaInicio">
+                            <input class="form-control" data-readonly type="date" name="Tarea[@index].FechaInicio" value="@item.FechaInicio.Value.ToString("yyyy-MM-dd")">
                         </td>
                         <td>
-                            <input class="form-control" data-readonly type="date" name="Tarea[@index].FechaFin" value="@item.FechaFin">
+                            <input class="form-control" data-readonly type="date" name="Tarea[@index].FechaFin" value="@item.FechaFin.Value.ToString("yyyy-MM-dd")" >
                         </td>
                         <td>
                             <input maxlength="20" class="form-control" data-readonly type="text" name="Tarea[@index].Estado" value="@item.Estado">

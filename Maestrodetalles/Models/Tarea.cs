@@ -17,7 +17,7 @@ namespace Maestrodetalles.Models
         public string? Descripcion { get; set; }
         [Display(Name = "Fecha de Inicio")]
         [Required(ErrorMessage = "La fecha de inicio de la tarea es obligatoria.")]
-        public DateTime FechaInicio { get; set; }
+        public DateTime? FechaInicio { get; set; }
         [Display(Name = "Fecha de Fin")]
         [Required(ErrorMessage = "La fecha de Fin de la tarea es obligatoria.")]
         public DateTime? FechaFin { get; set; }
